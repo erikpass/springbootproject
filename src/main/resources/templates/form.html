@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Hambaarsti valik</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="/"
+              >Registreeri <span class="sr-only">(current)</span></a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/view">Registri Vaade</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col ml-auto mr-auto mt-5">
+          <form
+            action="#"
+            th:action="@{/}"
+            th:object="${newVisit}"
+            method="post"
+          >
+            <div class="form-group">
+              <label th:text="#{dentist.name}" for="select-dentist"
+                >dentist.name</label
+              >
+              <select
+                name="dentistName"
+                class="form-control"
+                id="select-dentist"
+                th:field="*{dentistName}"
+              >
+                <option
+                  th:each="dentist : ${dentists}"
+                  th:text="${dentist}"
+                  th:value="${dentist}"
+                ></option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <div class="col">
+                <label th:text="#{visit.date}" for="select-date"
+                  >visit.date</label
+                >
+                <div class="form-group">
+                  <input
+                    name="visitDay"
+                    class="form-control"
+                    type="date"
+                    id="select-date"
+                    placeholder="Sisesta kuupäev..."
+                    th:field="*{visitDay}"
+                  />
+                </div>
+              </div>
+
+              <div class="col">
+                <label th:text="#{visit.time}" for="select-dentist"
+                  >visit.time</label
+                >
+                <div class="form-group">
+                  <select
+                    name="visitTime"
+                    class="form-control"
+                    id="select-time"
+                    th:field="*{visitTime}"
+                    disabled="disabled"
+                  >
+                    <option value="">-Vali-</option>
+                    <option
+                      th:each="time : ${times}"
+                      th:text="${time}"
+                      th:value="${time}"
+                    ></option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <button
+              class="btn btn-primary mt-2 mb-3 btn-block"
+              type="submit"
+              th:text="#{register.visit}"
+            ></button>
+          </form>
+        </div>
+      </div>
+
+      <div th:each="visit: ${visits}">
+        <p th:text="${visit.dentistName}"></p>
+        <span th:text="${visit.visitDay}"></span>
+        <span th:text="${visit.visitTime}"></span>
+      </div>
+
+      <script th:inline="javascript">
+        /*<![CDATA[*/
+        var visits = /*[[${visits}]]*/ "test";
+        var times = /*[[${times}]]*/ "test1";
+        /*]]>*/
+        //console.log(visits);
+      </script>
+    </div>
+    <script src="/js/script.js"></script>
+  </body>
+</html>
